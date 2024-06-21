@@ -15,7 +15,7 @@ CREATE TABLE Employee (
 CREATE TABLE Department (
     DepartID INT(6) NOT NULL,
     ContactNo CHAR(15) NOT NULL,
-   DepartName ENUM('TransitService', 'Maintenance', 'Security',   'Customer Service') NOT NULL,
+    DepartName ENUM('TransitService', 'Maintenance', 'Security',   'Customer Service') NOT NULL,
     Mgr_ID INT(6) NOT NULL,
     PRIMARY KEY (DepartID),
     FOREIGN KEY (Mgr_ID) REFERENCES Employee(EmployeeID)
@@ -113,3 +113,4 @@ CREATE TABLE ServiceFollowsSchedule (
     FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID),
     FOREIGN KEY (ScheduleID) REFERENCES Schedule(ScheduleID)
 );
+
