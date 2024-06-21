@@ -17,4 +17,4 @@ echo $result->num_rows." students in the student table";
 $conn->close();
 ?>
 </body>
-</html>
+</html> 

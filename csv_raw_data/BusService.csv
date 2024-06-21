@@ -1,0 +1,47 @@
+ServiceID,BusLine,BusDestination,BusLineType
+301825,7,Bathurst Station,Regular
+301837,7,Steeles Avenue West,Regular
+301836,11,Davisville Station,Regular
+301325,11,Steeles Avenue East,Regular
+301388,25,Pape Station,Regular
+301036,25,Steeles Avenue East,Regular
+301074,29,Wilson Station,Regular
+301372,29,Exhibition Place,Regular
+301766,32,Eglinton Station,Regular
+301375,32,Renforth Station,Regular
+301052,35,Jane Station,Regular
+301297,35,Pioneer Village Station,Regular
+301714,36,Finch Station,Regular
+301775,36,Humberwood Loop,Regular
+301783,41,Keele Station,Regular
+301624,41,York University,Regular
+301558,52,Lawrence Station,Regular
+301423,52,Pearson Airport,Regular
+301570,60,Finch Station,Regular
+301282,60,York University,Regular
+301313,85,Don Mills Station,Regular
+301806,85,Meadowvale Loop,Regular
+301785,96,York Mills Station,Regular
+301559,96,Humber College,Regular
+301694,900,Kipling Station,Express
+301528,900,Pearson Airport,Express
+301922,903,Kennedy Station,Express
+301227,903,Scarborough Centre Station,Express
+301004,905,Kennedy Station,Express
+301952,905,UTSC,Express
+301530,927,Kipling Station,Express
+301601,927,Humber College,Express
+301108,939,Finch Station,Express
+301982,939,Scarborough Centre Station,Express
+301320,960,Finch Station,Express
+301702,960,Pioneer Village Station,Express
+301572,300,Bloor-Danforth Night Bus,Night
+301366,300,Bloor-Danforth Night Bus,Night
+301381,320,Yonge Night Bus,Night
+301399,320,Yonge Night Bus,Night
+301241,329,Wilson Station,Night
+301596,329,Exhibition Place,Night
+301263,335,Jane Station,Night
+301602,335,Pioneer Village Station,Night
+301724,385,Yonge Street,Night
+301786,385,Meadowvale Loop,Night
