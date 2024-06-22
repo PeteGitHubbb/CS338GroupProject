@@ -5,7 +5,7 @@
 <html>
 <body>
 <?php
-include '../config.php';
+include 'config/config.php';
 
 $servername = $config['servername'];
 $username = $config['username'];
@@ -16,9 +16,9 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
 die("Connection failed: " . $conn->connect_error); }
-$sql = "SELECT uid FROM student";
+$sql = "SELECT EmployeeID FROM employee";
 $result = $conn->query($sql);
-echo $result->num_rows." students in the student table";
+echo $result->num_rows." employyees in the employee table";
 $conn->close();
 ?>
 </body>
