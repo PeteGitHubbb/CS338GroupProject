@@ -21,7 +21,15 @@
 
 
     <main>
-        <h2>The Manager page</h2>
+        <div class="left">
+            <div class="section-title">Administration Categories</div>
+            <a href="">Time off requests</a>
+            <a href="">Edit department</a>
+            <a href="">Employee schedule</a>
+        </div>
+        <div class="right">
+            <div class="section-title">qdsadas</div>
+        </div>
     </main>
 
 
@@ -31,6 +39,5 @@
 
 
 
-    <script src="javascript/script.js"></script>
 </body>
 </html>

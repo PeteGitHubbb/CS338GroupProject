@@ -21,7 +21,13 @@
 
 
     <main>
-        <h2>The Employee page </h2>
+        <div class="left">
+            <div class="section-title">Employee Categories</div>
+            <a href="">Request time off</a>
+        </div>
+        <div class="right">
+            <div class="section-title">qdsadas</div>
+        </div>
     </main>
 
 
@@ -31,6 +37,6 @@
 
 
 
-    <script src="javascript/script.js"></script>
+
 </body>
 </html>

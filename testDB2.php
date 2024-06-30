@@ -1,9 +1,7 @@
 
 
 
-<!DOCTYPE html>
-<html>
-<body>
+
 <?php
 include 'php/functions.php';
 
@@ -15,5 +13,4 @@ $result = $conn->query($sql);
 echo $result->num_rows." employyees in the employee table";
 $conn->close();
 ?>
-</body>
-</html>
+
