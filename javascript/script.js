@@ -1,7 +1,7 @@
 // script.js
-function showTable() {
+function showTable(url) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "php/birthdays.php", true);
+    xhr.open("GET", url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             document.getElementById("birthdayTableContainer").innerHTML = xhr.responseText;
