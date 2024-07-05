@@ -1,3 +1,15 @@
+<?php include "php/functions.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['DepartID'];
+    $No = $_POST['ContactNo'];
+    $name = $_POST['DepartName'];
+    $mgr_id = $_POST['Mgr_ID'];
+
+    updateDepartment($id, $No, $name, $mgr_id);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,13 +33,20 @@
 
 
     <main>
-        <h2>The Manager page</h2>
+        <div class="left">
+            <div class="section-title">Administration Categories</div>
+            <a href="">Time off requests</a>
+            <a href="javascript:void(0);" onclick="showTable('php/departments.php');">Edit department</a>
+            <a href="">Employee schedule</a>
+        </div>
+        <div class="right" id="TableContainer">
+            <div class="section-title">qdsadas</div>
+        </div>
     </main>
 
 
     <?php include "includes/footer.php"?>
     
-
 
 
 
