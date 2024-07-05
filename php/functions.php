@@ -35,6 +35,7 @@ function dbConnect(){
     }
     $mysqli->close();
 
+
     return $data;
 
  }
@@ -61,7 +62,50 @@ left join schedule as S on E.Schedule = S.ScheduleID";
     }
     $mysqli->close();
 
+
     return $data;
 
  }
+
+ function getEditableData() {
+    $mysqli = dbConnect();
+
+    $sql = "SELECT DepartID, ContactNo, DepartName, Mgr_ID FROM department";
+    $result = $mysqli->query($sql);
+
+    $data = [];
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $result->free();
+    } else {
+        die("Query failed: " . $mysqli->error);
+    }
+
+    $mysqli->close();
+
+    return $data;
+}
+
+ #for department
+ function updateDepartment($id, $No, $name, $mgr_id) {
+    $mysqli = dbConnect();
+
+    $sql = $mysqli->prepare("UPDATE department SET DepartName = ?, ContactNo = ?, Mgr_ID = ? WHERE DepartID = ?");
+    $sql->bind_param('siii', $name, $No, $mgr_id, $id);
+
+    if ($sql->execute()) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $sql->error;
+    }
+
+    $sql->close();
+    $mysqli->close();
+}
+
+
+
  ?>

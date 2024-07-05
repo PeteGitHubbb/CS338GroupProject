@@ -1,4 +1,5 @@
 <?php include "php/functions.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,7 @@
             <a href="javascript:void(0);" onclick="showTable('php/birthdays.php');">upcoming birthdays</a>
             <a href="javascript:void(0);" onclick="showTable('php/schedules.php');">Schedules</a>
         </div>
-        <div class="right" id="birthdayTableContainer">
+        <div class="right" id="TableContainer">
             <div class="section-title">Section Title</div>
         </div>        
     </main>
