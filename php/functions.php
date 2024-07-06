@@ -96,11 +96,12 @@ left join schedule as S on E.Schedule = S.ScheduleID";
     $sql = $mysqli->prepare("UPDATE department SET DepartName = ?, ContactNo = ?, Mgr_ID = ? WHERE DepartID = ?");
     $sql->bind_param('ssii', $name, $No, $mgr_id, $id);
 
-    if ($sql->execute()) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $sql->error;
-    }
+    
+    // if ($sql->execute()) {
+    //     echo "Record updated successfully";
+    // } else {
+    //     echo "Error updating record: " . $sql->error;
+    // }
 
     $sql->close();
     $mysqli->close();
