@@ -1,3 +1,4 @@
+<script type="text/javascript" src="../javascript/modal.js"></script>
 <?php include "php/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -6,7 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['DepartName'];
     $mgr_id = $_POST['Mgr_ID'];
 
-    updateDepartment($id, $No, $name, $mgr_id);
+    $updateStatus = updateDepartment($id, $No, $name, $mgr_id);
+    // echo '<script type="text/javascript">', 'testmodal();', '</script>';
+    // if ($updateStatus) {
+    //     echo '<script type="text/javascript">', 'testmodal();', '</script>';
+    // } else {
+    //     echo '<script type="text/javascript">', 'console.log("fail");', '</script>';
+    // }
 }
 
 ?>

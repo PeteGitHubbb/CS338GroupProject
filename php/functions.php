@@ -1,6 +1,8 @@
+<script type="text/javascript" src="../javascript/modal.js"></script>
 <?php
 include __DIR__ ."/../config/config.php";
 
+# this function connects to the database using the defined credentials from config 
 function dbConnect(){
     global $config;
     $servername = $config['servername'];
@@ -15,7 +17,8 @@ function dbConnect(){
     }
  }
 
- function getBirthday(){
+ 
+function getBirthday(){
     $mysqli = dbConnect();
 
 
@@ -38,15 +41,13 @@ function dbConnect(){
 
     return $data;
 
- }
+}
 
- function getSchedules(){
+function getSchedules(){
     $mysqli = dbConnect();
-
-
     $sql = "SELECT E.EmployeeID, E.FName, E.LName, S.StartTime, S.EndTime, S.ScheduleType
-FROM Employee as E
-left join schedule as S on E.Schedule = S.ScheduleID";
+    FROM Employee as E
+    left join schedule as S on E.Schedule = S.ScheduleID";
     $data = [];
     $result = $mysqli->query($sql);
     if ($result) {
@@ -62,12 +63,11 @@ left join schedule as S on E.Schedule = S.ScheduleID";
     }
     $mysqli->close();
 
-
     return $data;
 
- }
+}
 
- function getEditableData() {
+function getEditableData() {
     $mysqli = dbConnect();
 
     $sql = "SELECT DepartID, ContactNo, DepartName, Mgr_ID FROM department";
@@ -89,23 +89,25 @@ left join schedule as S on E.Schedule = S.ScheduleID";
     return $data;
 }
 
- #for department
- function updateDepartment($id, $No, $name, $mgr_id) {
+# this function updates the Department table
+function updateDepartment($id, $No, $name, $mgr_id) {
     $mysqli = dbConnect();
 
     $sql = $mysqli->prepare("UPDATE department SET DepartName = ?, ContactNo = ?, Mgr_ID = ? WHERE DepartID = ?");
     $sql->bind_param('ssii', $name, $No, $mgr_id, $id);
 
     if ($sql->execute()) {
-        echo "Record updated successfully";
+        # echo "Record updated successfully";
+        $queryStatus = "query successful";
     } else {
-        echo "Error updating record: " . $sql->error;
+        $queryStatus = "query failed";
+        # echo "Error updating record: " . $sql->error;
     }
 
     $sql->close();
     $mysqli->close();
+    return $queryStatus;
 }
 
+?>
 
-
- ?>
