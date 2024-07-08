@@ -23,7 +23,7 @@
     <main>
         <div class="left">
             <div class="section-title">Employee Categories</div>
-            <a href="">Request time off</a>
+            <a href="">Request Time Off</a>
         </div>
         <div class="right">
             <div class="section-title">qdsadas</div>

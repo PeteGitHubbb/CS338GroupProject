@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main>
         <div class="left">
             <div class="section-title">Administration Categories</div>
-            <a href="">Time off requests</a>
-            <a href="javascript:void(0);" onclick="showTable('php/departments.php');">Edit department</a>
-            <a href="">Employee schedule</a>
+            <a href="">Time off Requests</a>
+            <a href="javascript:void(0);" onclick="showTable('php/departments.php');">Edit Department</a>
+            <a href="javascript:void(0);" onclick="showTable('php/employee_schedules.php');">Employee Schedule</a>
         </div>
         <div class="right" id="TableContainer">
             <div class="section-title">qdsadas</div>
