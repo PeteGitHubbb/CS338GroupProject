@@ -67,6 +67,7 @@ left join schedule as S on E.Schedule = S.ScheduleID";
 
  }
 
+ #for department
  function getEditableData() {
     $mysqli = dbConnect();
 
@@ -98,10 +99,19 @@ left join schedule as S on E.Schedule = S.ScheduleID";
 
     
     // if ($sql->execute()) {
-    //     echo "Record updated successfully";
-    // } else {
-    //     echo "Error updating record: " . $sql->error;
-    // }
+    //      echo "";
+    //  } else {
+    //      echo "Error updating record: " . $sql->error;
+    //  }
+    try {
+        if($sql->execute()){#success
+            echo "";
+        } else {
+            throw Exception("FKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+        }
+    } catch(Exception $e) {
+        echo "";
+    }
 
     $sql->close();
     $mysqli->close();
