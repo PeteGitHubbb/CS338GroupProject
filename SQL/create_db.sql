@@ -38,7 +38,7 @@ CREATE TABLE BusService (
     BServiceID INT(6) NOT NULL,
     BusLine INT(3) NOT NULL,
     BusDestination VARCHAR(50) NOT NULL,
-    BusLineType ENUM('Regular', 'Express', 'Night') NOT NULL,
+    BusLineType ENUM('Regular', 'Express') NOT NULL,
     PRIMARY KEY (BServiceID),
     FOREIGN KEY (BServiceID) REFERENCES TransitService(ServiceID)
 );
@@ -79,16 +79,21 @@ CREATE TABLE EmployeeSchedule (
 );
 ALTER TABLE Employee ADD FOREIGN KEY (Schedule) REFERENCES EmployeeSchedule(EmployeeScheduleID);
 CREATE TABLE Vehicle (
-    VehicleID INT(8) NOT NULL,
-    VehicleType ENUM('Bus', 'StreetCar', 'Subway') NOT NULL,
-    Capacity INT NOT NULL,
-    Seats INT NOT NULL,
-    Status BOOLEAN NOT NULL,
-    PRIMARY KEY (VehicleID)
+    VehicleID CHAR(8) PRIMARY KEY,
+    VehicleType ENUM('Bus', 'Wheel-Trans Bus', 'StreetCar', 'Subway', 'Subway car') NOT NULL,
+    VehicleNumberSeries VARCHAR(20) NOT NULL,
+    Model VARCHAR(50) NOT NULL,
+    VehiclesInService INT NOT NULL,
+    Built YEAR NOT NULL,
+    Seat INT NOT NULL,
+    LengthInMeters FLOAT NOT NULL,
+    TrackGaugeInMillimeters FLOAT DEFAULT NULL,
+    Fuel VARCHAR(50) NOT NULL,
+    Manufacturer VARCHAR(50) NOT NULL
 );
 CREATE TABLE TransitSchedule (
     TransitScheduleID INT(6) NOT NULL,
-    VehicleID INT(8) NOT NULL,
+    VehicleID CHAR(8) NOT NULL,
     PRIMARY KEY (TransitScheduleID),
     FOREIGN KEY (VehicleID) REFERENCES Vehicle(VehicleID)
 );
@@ -101,7 +106,7 @@ CREATE TABLE EmployeeProvideTransitService (
 );
 CREATE TABLE TransitServiceAssignVehicle (
     ServiceID INT(6) NOT NULL,
-    VehicleID INT(8) NOT NULL,
+    VehicleID CHAR(8) NOT NULL,
     PRIMARY KEY (ServiceID, VehicleID),
     FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID),
     FOREIGN KEY (VehicleID) REFERENCES Vehicle(VehicleID)
@@ -114,3 +119,62 @@ CREATE TABLE ServiceFollowsSchedule (
     FOREIGN KEY (ScheduleID) REFERENCES Schedule(ScheduleID)
 );
 
+CREATE TABLE ShiftRequest (
+  RequestID INT,
+  EmployeeID INT,
+  EffectiveDate DATETIME,
+  OriginalShift INT, -- Either {404371, 404372, 404373}
+  RequestedStartTime TIME,
+  RequestedEndTIme TIME,
+  Reason VARCHAR(255), 
+  RequestDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+  Status VARCHAR(20) DEFAULT 'Pending', -- Either 'Approved'; 'Denied';'Pending'
+  -- Primary Key constraint
+  PRIMARY KEY (RequestID),
+  FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
+  
+  -- Constraint on request date
+  CONSTRAINT RequestTimingCheck
+  CHECK(TIMESTAMPDIFF(HOUR,RequestDate,EffectiveDate) >= 24),
+  
+  -- Constraint on DailyShiftHours
+  CONSTRAINT DailyShiftLimit 
+  CHECK (TIMESTAMPDIFF(HOUR, RequestedStartTime, RequestedEndTime) <= 8)
+);
+
+CREATE TABLE MonFriServiceInterval (
+    ServiceID INT,
+    MorningPeak INT,
+    Midday INT,
+    AfternoonPeak INT,
+    EarlyEvening INT,
+    LateEvening INT,
+    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak IS NOT NULL AND Midday IS NOT NULL AND AfternoonPeak IS NOT NULL AND EarlyEvening IS NOT NULL AND LateEvening IS NOT NULL),
+    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND Midday < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10),
+    PRIMARY KEY (ServiceID),
+    FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID)
+);
+
+CREATE TABLE SatServiceInterval (
+    ServiceID INT,
+    MorningPeak INT,
+    AfternoonPeak INT,
+    EarlyEvening INT,
+    LateEvening INT,
+    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak IS NOT NULL AND AfternoonPeak IS NOT NULL AND EarlyEvening IS NOT NULL AND LateEvening IS NOT NULL),
+    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10),
+    PRIMARY KEY (ServiceID),
+    FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID)
+);
+
+CREATE TABLE SunHoliServiceInterval (
+    ServiceID INT,
+    MorningPeak INT,
+    AfternoonPeak INT,
+    EarlyEvening INT,
+    LateEvening INT,
+    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak IS NOT NULL AND AfternoonPeak IS NOT NULL AND EarlyEvening IS NOT NULL AND LateEvening IS NOT NULL),
+    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10),
+    PRIMARY KEY (ServiceID),
+    FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID)
+);
