@@ -95,9 +95,10 @@ function updateDepartment($id, $No, $name, $mgr_id) {
 
     $sql = $mysqli->prepare("UPDATE department SET DepartName = ?, ContactNo = ?, Mgr_ID = ? WHERE DepartID = ?");
     $sql->bind_param('ssii', $name, $No, $mgr_id, $id);
-
+    $queryStatus = False;
     if ($sql->execute()) {
         echo "Record updated successfully";
+        $queryStatus = True;
     } else {
         echo "Error updating record: " . $sql->error;
     }
@@ -105,6 +106,16 @@ function updateDepartment($id, $No, $name, $mgr_id) {
     $sql->close();
     $mysqli->close();
     return $queryStatus;
+}
+
+
+# this function allows php to log to console
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+
+    echo "<script>console.log('$output' );</script>";
 }
 
 ?>

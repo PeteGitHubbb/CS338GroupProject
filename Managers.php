@@ -14,10 +14,14 @@ function postServer() {
         $updateStatus = updateDepartment($id, $No, $name, $mgr_id);
         # echo '<script type="text/javascript">', 'testmodal();', '</script>';
         if ($updateStatus) {
-            echo '<script type="text/javascript">', 'testmodal();', '</script>';
+            debug_to_console("Update Success");
         } else {
-            echo '<script type="text/javascript">', 'console.log("fail");', '</script>';
+            debug_to_console("Update Failed");
         }
+        debug_to_console($id);
+        debug_to_console($No);
+        debug_to_console($name);
+        debug_to_console($mgr_id);
     }
 }
 postServer();
@@ -42,10 +46,7 @@ postServer();
 
     <?php include "includes/nav.php" ?>
     <?php include "includes/header.php"?>
-
-    <div id='success-modal'>
-        <?php include "php/modal.php"?>
-    </div>
+    
 
 
     <main>
