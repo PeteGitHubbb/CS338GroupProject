@@ -1,6 +1,18 @@
 <script type="text/javascript" src="../javascript/modal.js"></script>
 <?php include "php/functions.php";
 
+<<<<<<< HEAD
+=======
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //which update button was pressed
+    $update_keys = array_keys($_POST['update']);
+
+
+    $id = $update_keys[0];
+    $No = $_POST['ContactNo'][$id];
+    $name = $_POST['DepartName'][$id];
+    $mgr_id = $_POST['Mgr_ID'][$id];
+>>>>>>> fred
 
 function postServer() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
