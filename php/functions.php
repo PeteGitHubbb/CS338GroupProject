@@ -96,12 +96,17 @@ function updateDepartment($id, $No, $name, $mgr_id) {
     $sql = $mysqli->prepare("UPDATE department SET DepartName = ?, ContactNo = ?, Mgr_ID = ? WHERE DepartID = ?");
     $sql->bind_param('ssii', $name, $No, $mgr_id, $id);
     $queryStatus = False;
+    try {
     if ($sql->execute()) {
         echo "Record updated successfully";
         $queryStatus = True;
     } else {
         echo "Error updating record: " . $sql->error;
     }
+    } catch (Exception $e) {
+        echo("");
+    }
+
 
     $sql->close();
     $mysqli->close();
