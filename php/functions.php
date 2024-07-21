@@ -113,6 +113,30 @@ function updateDepartment($id, $No, $name, $mgr_id) {
     return $queryStatus;
 }
 
+#insert time off requests
+function insertTimeOff($id, $edate, $oshift, $stime, $etime, $reason) {
+    $mysqli = dbConnect();
+    $sql = $mysqli->prepare("INSERT into shiftrequest (EmployeeID,EffectiveDate,OriginalShift,RequestedStartTime,RequestedEndTIme,Reason)
+    values (?, ?, ?, ?,?,?)");
+    $sql->bind_param('isisss',$id,$edate,$oshift,$stime,$etime,$reason);
+
+    try {
+        if ($sql->execute()) {
+            echo "Record inserted successfully";
+            $queryStatus = True;
+        } else {
+            echo "Error updating record: " . $sql->error;
+        }
+    } catch (Exception $e) {
+            echo("");
+    }
+    
+    
+    $sql->close();
+    $mysqli->close();
+
+}
+
 
 # this function allows php to log to console
 function debug_to_console($data) {

@@ -120,7 +120,7 @@ CREATE TABLE ServiceFollowsSchedule (
 );
 
 CREATE TABLE ShiftRequest (
-  RequestID INT,
+  RequestID INT ,
   EmployeeID INT,
   EffectiveDate DATETIME,
   OriginalShift INT, -- Either {404371, 404372, 404373}
@@ -132,6 +132,8 @@ CREATE TABLE ShiftRequest (
   -- Primary Key constraint
   PRIMARY KEY (RequestID),
   FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
+
+
   
   -- Constraint on request date
   CONSTRAINT RequestTimingCheck
@@ -141,6 +143,8 @@ CREATE TABLE ShiftRequest (
   CONSTRAINT DailyShiftLimit 
   CHECK (TIMESTAMPDIFF(HOUR, RequestedStartTime, RequestedEndTime) <= 8)
 );
+
+ALTER TABLE shiftrequest modify RequestID INT auto_increment;
 
 CREATE TABLE MonFriServiceInterval (
     ServiceID INT,
