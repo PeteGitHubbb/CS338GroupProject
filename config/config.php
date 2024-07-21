@@ -1,9 +1,9 @@
 <?php
 $config = [
-'servername' => 'your_server_name',
-'username' => 'your_user_name',
-'password' => 'your_password',
-'dbname' => 'your_db_name'
+'servername' => '127.0.0.1',
+'username' => 'stagqw12',
+'password' => 'YuriaInvanova1245',
+'dbname' => 'ttctransitinfosystem'
 ];
 ?>
 

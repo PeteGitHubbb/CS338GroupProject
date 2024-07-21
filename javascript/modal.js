@@ -15,3 +15,8 @@ function testmodal() {
     // span.style.color = "red";
     console.log('success.')
 }
+
+function test() {
+    var span = document.getElementsByClassName("sub-title")[0];
+    console.log(span);
+}

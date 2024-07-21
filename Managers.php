@@ -1,20 +1,24 @@
 <script type="text/javascript" src="../javascript/modal.js"></script>
 <?php include "php/functions.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['DepartID'];
-    $No = $_POST['ContactNo'];
-    $name = $_POST['DepartName'];
-    $mgr_id = $_POST['Mgr_ID'];
 
-    $updateStatus = updateDepartment($id, $No, $name, $mgr_id);
-    // echo '<script type="text/javascript">', 'testmodal();', '</script>';
-    // if ($updateStatus) {
-    //     echo '<script type="text/javascript">', 'testmodal();', '</script>';
-    // } else {
-    //     echo '<script type="text/javascript">', 'console.log("fail");', '</script>';
-    // }
+function postServer() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['DepartID'];
+        $No = $_POST['ContactNo'];
+        $name = $_POST['DepartName'];
+        $mgr_id = $_POST['Mgr_ID'];
+
+        $updateStatus = updateDepartment($id, $No, $name, $mgr_id);
+        # echo '<script type="text/javascript">', 'testmodal();', '</script>';
+        if ($updateStatus) {
+            echo '<script type="text/javascript">', 'testmodal();', '</script>';
+        } else {
+            echo '<script type="text/javascript">', 'console.log("fail");', '</script>';
+        }
+    }
 }
+postServer();
 
 ?>
 <!DOCTYPE html>
@@ -36,10 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php include "includes/nav.php" ?>
     <?php include "includes/header.php"?>
-    
+
+    <div id='success-modal'>
+        <?php include "php/modal.php"?>
+    </div>
 
 
     <main>
+
         <div class="left">
             <div class="section-title">Administration Categories</div>
             <a href="">Time off Requests</a>
