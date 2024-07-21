@@ -1,10 +1,14 @@
 <?php include "php/functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['DepartID'];
-    $No = $_POST['ContactNo'];
-    $name = $_POST['DepartName'];
-    $mgr_id = $_POST['Mgr_ID'];
+    //which update button was pressed
+    $update_keys = array_keys($_POST['update']);
+
+
+    $id = $update_keys[0];
+    $No = $_POST['ContactNo'][$id];
+    $name = $_POST['DepartName'][$id];
+    $mgr_id = $_POST['Mgr_ID'][$id];
 
     updateDepartment($id, $No, $name, $mgr_id);
 }
