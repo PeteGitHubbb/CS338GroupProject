@@ -67,7 +67,7 @@ function getSchedules(){
 
 }
 
-function getEditableData() {
+ function getEditableData() {
     $mysqli = dbConnect();
 
     $sql = "SELECT DepartID, ContactNo, DepartName, Mgr_ID FROM department";
@@ -96,16 +96,10 @@ function updateDepartment($id, $No, $name, $mgr_id) {
     $sql = $mysqli->prepare("UPDATE department SET DepartName = ?, ContactNo = ?, Mgr_ID = ? WHERE DepartID = ?");
     $sql->bind_param('ssii', $name, $No, $mgr_id, $id);
 
-    try {
-        if($sql->execute()){#success
-            $queryStatus = True;
-            
-        } else {
-            $queryStatus = False;
-            throw Exception("FKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-        }
-    } catch(Exception $e) {
-        echo "asdfasdf";
+    if ($sql->execute()) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $sql->error;
     }
 
     $sql->close();
