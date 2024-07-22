@@ -36,22 +36,22 @@ CREATE TABLE TransitService (
 );
 CREATE TABLE BusService (
     BServiceID INT(6) NOT NULL,
-    BusLine INT(3) NOT NULL,
+    BRouteName VARCHAR(50) NOT NULL,
     BusDestination VARCHAR(50) NOT NULL,
-    BusLineType ENUM('Regular', 'Express') NOT NULL,
+    BusLineType ENUM('Regular', 'Express', 'Night') NOT NULL,
     PRIMARY KEY (BServiceID),
     FOREIGN KEY (BServiceID) REFERENCES TransitService(ServiceID)
 );
 CREATE TABLE SubwayService (
     SServiceID INT(6) NOT NULL,
-    SubwayLine INT NOT NULL CHECK (SubwayLine BETWEEN 1 AND 3),
+    SRouteName VARCHAR(50) NOT NULL,
     SubwayDestination VARCHAR(50) NOT NULL,
     PRIMARY KEY (SServiceID),
     FOREIGN KEY (SServiceID) REFERENCES TransitService(ServiceID)
 );
 CREATE TABLE StreetCarService (
-    SCServiceID INT(6) NOT NULL,
-    StreetCarLine INT(3) NOT NULL,
+    SCServiceID INT(3) NOT NULL,
+    SCRouteName VARCHAR(50) NOT NULL,
     StreetCarDestination VARCHAR(50) NOT NULL,
     PRIMARY KEY (SCServiceID),
     FOREIGN KEY (SCServiceID) REFERENCES TransitService(ServiceID)
