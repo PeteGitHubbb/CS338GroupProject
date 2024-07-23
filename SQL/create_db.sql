@@ -146,39 +146,45 @@ CREATE TABLE ShiftRequest (
 
 ALTER TABLE shiftrequest modify RequestID INT auto_increment;
 
-CREATE TABLE MonFriServiceInterval (
+CREATE TABLE Mon_Fri_ServicePerformance (
     ServiceID INT,
     MorningPeak INT,
     Midday INT,
     AfternoonPeak INT,
     EarlyEvening INT,
     LateEvening INT,
-    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak IS NOT NULL AND Midday IS NOT NULL AND AfternoonPeak IS NOT NULL AND EarlyEvening IS NOT NULL AND LateEvening IS NOT NULL),
-    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND Midday < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10),
+    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak >0 AND Midday >0 AND AfternoonPeak >0 AND EarlyEvening >0 AND LateEvening >0),
+    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND Midday < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10
+    AND MorningPeak > 0 AND AfternoonPeak > 0 AND EarlyEvening > 0 AND LateEvening > 0 AND Midday > 0),
+    AverageWT REAL,
     PRIMARY KEY (ServiceID),
     FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID)
 );
 
-CREATE TABLE SatServiceInterval (
+CREATE TABLE Sat_ServicePerformance (
     ServiceID INT,
     MorningPeak INT,
     AfternoonPeak INT,
     EarlyEvening INT,
     LateEvening INT,
-    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak IS NOT NULL AND AfternoonPeak IS NOT NULL AND EarlyEvening IS NOT NULL AND LateEvening IS NOT NULL),
-    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10),
+    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak >0 AND AfternoonPeak >0 AND EarlyEvening >0 AND LateEvening >0),
+    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10
+    AND MorningPeak > 0 AND AfternoonPeak > 0 AND EarlyEvening > 0 AND LateEvening > 0),
+    AverageWT REAL,
     PRIMARY KEY (ServiceID),
     FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID)
 );
 
-CREATE TABLE SunHoliServiceInterval (
+CREATE TABLE Sunholiday_ServicePerformance (
     ServiceID INT,
     MorningPeak INT,
     AfternoonPeak INT,
     EarlyEvening INT,
     LateEvening INT,
-    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak IS NOT NULL AND AfternoonPeak IS NOT NULL AND EarlyEvening IS NOT NULL AND LateEvening IS NOT NULL),
-    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10),
+    Coverage BOOLEAN GENERATED ALWAYS AS (MorningPeak >0 AND AfternoonPeak >0 AND EarlyEvening >0 AND LateEvening >0),
+    TenMinService BOOLEAN GENERATED ALWAYS AS (MorningPeak < 10 AND AfternoonPeak < 10 AND EarlyEvening < 10 AND LateEvening < 10
+                                                AND MorningPeak > 0 AND AfternoonPeak > 0 AND EarlyEvening > 0 AND LateEvening > 0),
+    AverageWT REAL,
     PRIMARY KEY (ServiceID),
     FOREIGN KEY (ServiceID) REFERENCES TransitService(ServiceID)
 );

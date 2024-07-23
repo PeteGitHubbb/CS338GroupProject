@@ -128,7 +128,7 @@ function insertTimeOff($id, $edate, $oshift, $stime, $etime, $reason) {
             echo "Error updating record: " . $sql->error;
         }
     } catch (Exception $e) {
-            echo("");
+            echo("Error");
     }
     
     

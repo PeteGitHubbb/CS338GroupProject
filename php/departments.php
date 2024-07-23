@@ -7,6 +7,7 @@ $departments = getEditableData();
 ?>
 
 <form method="post" action="Managers.php">
+    <input type="hidden" name ="form_id" value="depart">
     <table>
         <tr>
             <th>DepartID</th>
