@@ -9,6 +9,7 @@ function postServer() {
             $form_id = $_POST['form_id'];
         }
 
+        // update department form
         if ($form_id === "depart") {
 
             //which update button was pressed
