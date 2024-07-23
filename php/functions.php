@@ -1,6 +1,6 @@
 <script type="text/javascript" src="../javascript/modal.js"></script>
 <?php
-include __DIR__ ."/../config/config.php";
+include __DIR__ ."/../../config/config.php";
 
 # this function connects to the database using the defined credentials from config 
 function dbConnect(){
@@ -136,6 +136,8 @@ function insertTimeOff($id, $edate, $oshift, $stime, $etime, $reason) {
     $mysqli->close();
 
 }
+
+// function get
 
 
 # this function allows php to log to console

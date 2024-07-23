@@ -20,10 +20,9 @@
 
     <?php include "includes/nav.php" ?>
     <?php include "includes/header.php"?>
-    
-
 
     <main>
+        
     <div class="left">
             <div class="section-title">General</div>
             <a href="javascript:void(0);" onclick="showTable('php/birthdays.php');">Upcoming Birthdays</a>

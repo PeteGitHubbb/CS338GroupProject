@@ -46,14 +46,11 @@ postServer();
 
     <?php include "includes/nav.php" ?>
     <?php include "includes/header.php"?>
-    
-
 
     <main>
-
         <div class="left">
             <div class="section-title">Administration Categories</div>
-            <a href="">Time off Requests</a>
+            <a href="javascript:void(0);" onclick="showTable('php/time_off_requests.php');">Time off Requests</a>
             <a href="javascript:void(0);" onclick="showTable('php/departments.php');">Edit Department</a>
             <a href="javascript:void(0);" onclick="showTable('php/employee_schedules.php');">Employee Schedule</a>
         </div>
