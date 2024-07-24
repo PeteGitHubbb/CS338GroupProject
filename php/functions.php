@@ -2,7 +2,7 @@
 <?php
 include __DIR__ ."/../config/config.php";
 
-# this function connects to the database using the defined credentials from config 
+# this function connects to the database using the defined credentials from config, not a feature
 function dbConnect(){
     global $config;
     $servername = $config['servername'];
@@ -17,7 +17,8 @@ function dbConnect(){
     }
  }
 
- 
+
+ #feature
 function getBirthday(){
     $mysqli = dbConnect();
 
@@ -43,6 +44,7 @@ function getBirthday(){
 
 }
 
+#feature
 function getSchedules(){
     $mysqli = dbConnect();
     $sql = "SELECT E.EmployeeID, E.FName, E.LName, S.StartTime, S.EndTime, S.ScheduleType
@@ -67,6 +69,7 @@ function getSchedules(){
 
 }
 
+#not a feature, connected to update database feature
  function getEditableData() {
     $mysqli = dbConnect();
 
@@ -89,7 +92,7 @@ function getSchedules(){
     return $data;
 }
 
-# this function updates the Department table
+# this function updates the Department table feature
 function updateDepartment($id, $No, $name, $mgr_id) {
     $mysqli = dbConnect();
 
@@ -113,7 +116,7 @@ function updateDepartment($id, $No, $name, $mgr_id) {
     return $queryStatus;
 }
 
-#insert time off requests
+#insert time off requests, feature
 function insertTimeOff($id, $edate, $oshift, $stime, $etime, $reason) {
     $mysqli = dbConnect();
     $sql = $mysqli->prepare("INSERT into shiftrequest (EmployeeID,EffectiveDate,OriginalShift,RequestedStartTime,RequestedEndTIme,Reason)
@@ -135,6 +138,88 @@ function insertTimeOff($id, $edate, $oshift, $stime, $etime, $reason) {
     $sql->close();
     $mysqli->close();
 
+}
+
+#get performance table feature
+function PerformanceSummary($daytime,$vehicle) {
+    $mysqli = dbConnect();
+
+    $sql1 = "DROP view if exists ALLtransitservice";
+
+    $mysqli->query($sql1);
+
+    #create view combing all transit services
+    $sql2 ="CREATE VIEW AllTransitService AS
+SELECT SServiceID AS ID, SRouteName, SubwayDestination AS Destination, 'Subway' AS ServiceType
+FROM SubwayService 
+UNION ALL
+SELECT BserviceID, BRouteName, BusDestination, BusLineType
+FROM BusService
+UNION ALL
+SELECT SCServiceID, SCRouteName, StreetCarDestination, 'Streetcar' AS ServiceType
+FROM StreetCarService";
+
+    if (!$mysqli->query($sql2)) {
+        echo("Error generating view: " . $mysqli->error);
+    }
+
+    #assigning time to actual table name
+    $time = NULL;
+    if ($daytime == "weekday") {
+        $time = "mon_fri_serviceperformance";
+    } elseif ($daytime == "saturday") {
+        $time = "sat_serviceperformance";
+    }else {
+        $time = "sunholiday_serviceperformance";
+    }
+
+
+    $sql2_5 = "DROP view if exists PerfTable";
+
+    $mysqli->query($sql2_5);
+
+
+    $sql3 = "CREATE VIEW PerfTable AS
+SELECT TimeI.ServiceID, ATS.ServiceType, TimeI.AverageWT AS AverageWaitingTime, 
+       TimeI.TenMinService, TimeI.coverage AS AllTimeCoverage, V.Model, V.Seat
+FROM $time TimeI, Vehicle V, TransitServiceAssignVehicle TSAV, 
+     AllTransitService ATS
+WHERE TimeI.ServiceID = ATS.ID #tells you servicetype, streetcar, subway, or bus
+AND TimeI.ServiceID = TSAV.ServiceID
+AND TSAV.VehicleID = V.VehicleID";
+
+    if (!$mysqli->query($sql3)) {
+        echo("Error generating view: " . $mysqli->error);
+    }
+
+    $data = [];
+    $sql4 = NULL;
+    if ($vehicle == "all") { 
+        $sql4 = "SELECT * FROM PerfTable";
+    } elseif ($vehicle =="bus") { #2 types of buses, regular and express
+        $sql4 = "SELECT * FROM PerfTable WHERE ServiceType ='Regular' or ServiceType ='Express'";
+    } elseif ($vehicle == "Subway") { # for Subway
+        $sql4 = "SELECT * FROM PerfTable where ServiceType = 'Subway'";
+    } elseif ($vehicle == "StreetCar") {
+        $sql4 = "SELECT * FROM PerfTable where ServiceType = 'StreetCar'";
+    }
+    
+    $result = $mysqli->query($sql4);
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $result->free();
+    } else {
+        die("Query failed: " . $mysqli->error);
+    }
+
+
+
+    
+    $mysqli->close();
+    return $data;
 }
 
 
