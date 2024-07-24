@@ -67,14 +67,12 @@ function getSchedules(){
 
 }
 
- function getEditableData() {
+# function to get department data
+function getEditableData() {
     $mysqli = dbConnect();
-
-    $sql = "SELECT DepartID, ContactNo, DepartName, Mgr_ID FROM department";
+    $sql = "SELECT DepartID, ContactNo, DepartName, Mgr_ID FROM department where EffectiveDate > CURRENT_TIMESTAMP;";
     $result = $mysqli->query($sql);
-
     $data = [];
-
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $data[] = $row;
@@ -83,9 +81,25 @@ function getSchedules(){
     } else {
         die("Query failed: " . $mysqli->error);
     }
-
     $mysqli->close();
+    return $data;
+}
 
+# function to get time off requests data
+function getTimeOffRequests() {
+    $mysqli = dbConnect();
+    $sql = "SELECT RequestID, EmployeeID, EffectiveDate, OriginalShift, RequestedStartTime, RequestedEndTime, Reason, RequestDate, status from shiftrequest";
+    $result = $mysqli->query($sql);
+    $data = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        $result->free();
+    } else {
+        die("Query failed: " . $mysqli->error);
+    }
+    $mysqli->close();
     return $data;
 }
 
@@ -137,7 +151,7 @@ function insertTimeOff($id, $edate, $oshift, $stime, $etime, $reason) {
 
 }
 
-// function get
+
 
 
 # this function allows php to log to console
