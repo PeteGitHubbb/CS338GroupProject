@@ -1,4 +1,4 @@
-<script type="text/javascript" src="../javascript/modal.js"></script>
+
 <?php
 include __DIR__ ."/../../config/config.php";
 
@@ -69,11 +69,10 @@ function getSchedules(){
 
 }
 
-# function to get department data
-#not a feature, connected to update database feature
+# function to get department data: not a feature, connected to update database feature
 function getEditableData() {
     $mysqli = dbConnect();
-    $sql = "SELECT DepartID, ContactNo, DepartName, Mgr_ID FROM department where EffectiveDate > CURRENT_TIMESTAMP;";
+    $sql = "SELECT DepartID, ContactNo, DepartName, Mgr_ID FROM department;";
     $result = $mysqli->query($sql);
     $data = [];
     if ($result) {
@@ -88,10 +87,10 @@ function getEditableData() {
     return $data;
 }
 
-# function to get time off requests data
+# function to get time off requests data: not a feature, connected to Approve/Deny Time off requests feature
 function getTimeOffRequests() {
     $mysqli = dbConnect();
-    $sql = "SELECT RequestID, EmployeeID, EffectiveDate, OriginalShift, RequestedStartTime, RequestedEndTime, Reason, RequestDate, status from shiftrequest";
+    $sql = "SELECT RequestID, EmployeeID, EffectiveDate, OriginalShift, RequestedStartTime, RequestedEndTime, Reason, RequestDate, status from shiftrequest;";
     $result = $mysqli->query($sql);
     $data = [];
     if ($result) {
@@ -125,6 +124,57 @@ function updateDepartment($id, $No, $name, $mgr_id) {
     }
 
 
+    $sql->close();
+    $mysqli->close();
+    return $queryStatus;
+}
+
+function acceptTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $RequestedStartTime, $RequestedEndTime, $Reason, $RequestDate, $status) {
+    $queryStatus = False;
+    if ($status != "Pending") {
+        debug_to_console("You can only update pending requests.");
+        return !$queryStatus; 
+    } 
+
+    $approve = "Approved";
+    $mysqli = dbConnect();
+    $sql = $mysqli->prepare("UPDATE shiftRequest SET status = ? WHERE RequestID = ?;");
+    $sql->bind_param('si', $approve, $reqID);
+    try {
+        if ($sql->execute()) {
+            echo "Record updated successfully";
+            $queryStatus = True;
+        } else {
+            echo "Error updating record: " . $sql->error;
+        }
+    } catch (Exception $e) {
+            echo($e);
+    }    
+    $sql->close();
+    $mysqli->close();
+    return $queryStatus;
+}
+
+function denyTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $RequestedStartTime, $RequestedEndTime, $Reason, $RequestDate, $status) {
+    $queryStatus = False;
+    if ($status != "Pending") {
+        debug_to_console("You can only update pending requests.");
+        return !$queryStatus; 
+    } 
+    $deny = "Denied";
+    $mysqli = dbConnect();
+    $sql = $mysqli->prepare("UPDATE shiftRequest SET status = ? WHERE RequestID = ?;");
+    $sql->bind_param('si', $deny, $reqID);
+    try {
+        if ($sql->execute()) {
+            echo "Record updated successfully";
+            $queryStatus = True;
+        } else {
+            echo "Error updating record: " . $sql->error;
+        }
+    } catch (Exception $e) {
+            echo($e);
+    }    
     $sql->close();
     $mysqli->close();
     return $queryStatus;
@@ -245,7 +295,7 @@ function debug_to_console($data) {
     if (is_array($output))
         $output = implode(',', $output);
 
-    echo "<script>console.log('$output' );</script>";
+    echo "<script>console.log('$output');</script>";
 }
 
 ?>

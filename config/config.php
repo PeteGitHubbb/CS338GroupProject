@@ -1,9 +1,9 @@
 <?php
 $config = [
 'servername' => '127.0.0.1',
-'username' => 'IGP',
-'password' => 'choochoo123!!6',
-'dbname' => 'ttcprod'
+'username' => 'stagqw12',
+'password' => 'YuriaInvanova1245',
+'dbname' => 'proddb'
 ];
 ?>
 

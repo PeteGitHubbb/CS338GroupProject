@@ -15,7 +15,7 @@ $requests = getTimeOffRequests();
             <th>Requested End Time</th>
             <th>Reason</th>
             <th>Request Date</th>
-            <th>status<th>
+            <th>Status<th>
         </tr>
         <?php foreach ($requests as $request): ?>
         <tr>
@@ -31,8 +31,18 @@ $requests = getTimeOffRequests();
             
 
             <td>
+                <input type="hidden" name="RequestID[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['RequestID']; ?>">
+                <input type="hidden" name="EmployeeID[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['EmployeeID']; ?>">
+                <input type="hidden" name="EffectiveDate[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['EffectiveDate']; ?>">
+                <input type="hidden" name="OriginalShift[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['OriginalShift']; ?>">
+                <input type="hidden" name="RequestedStartTime[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['RequestedStartTime']; ?>">
+                <input type="hidden" name="RequestedEndTime[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['RequestedEndTime']; ?>">
+                <input type="hidden" name="Reason[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['Reason']; ?>">
+                <input type="hidden" name="RequestDate[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['RequestDate']; ?>">
+                <input type="hidden" name="status[<?php echo $request['RequestID']; ?>]" value="<?php echo $request['status']; ?>">
+
                 <input type="submit" name="Approve[<?php echo $request['RequestID']; ?>]" value="Approve">
-                <input type="submit" name="Approve[<?php echo $request['RequestID']; ?>]" value="Deny">
+                <input type="submit" name="Deny[<?php echo $request['RequestID']; ?>]" value="Deny">
             </td>
         </tr>
         <?php endforeach; ?>

@@ -1,17 +1,19 @@
-<script type="text/javascript" src="../javascript/modal.js"></script>
-<?php include "php/functions.php";
 
+<?php include "php/functions.php";
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 function postServer() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $form_id = NULL;
 
         if (isset($_POST['form_id'])) {
             $form_id = $_POST['form_id'];
+            debug_to_console($form_id);
         }
-
         // update department form
         if ($form_id === "depart") {
-
+            
             //which update button was pressed
             $update_keys = array_keys($_POST['update']);
 
@@ -32,6 +34,45 @@ function postServer() {
             debug_to_console($name);
             debug_to_console($mgr_id);
         }
+        
+        // Approve/Deny Time off requests
+        if ($form_id === "timeOffRequests") {
+            //which update button was pressed
+            $update_keys = NULL; 
+            if (isset($_POST['Approve'])) {
+                $update_keys = array_keys($_POST['Approve']);
+                $reqID = $update_keys[0];
+                $EmployeeID = $_POST['EmployeeID'][$reqID];
+                $EffectiveDate = $_POST['EffectiveDate'][$reqID];
+                $OriginalShift = $_POST['OriginalShift'][$reqID];
+                $RequestedStartTime = $_POST['RequestedStartTime'][$reqID];
+                $RequestedEndTime = $_POST['RequestedEndTime'][$reqID];
+                $Reason = $_POST['Reason'][$reqID];
+                $RequestDate = $_POST['RequestDate'][$reqID];
+                $Status = $_POST['status'][$reqID];
+
+                acceptTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $RequestedStartTime, $RequestedEndTime, $Reason, $RequestDate, $Status);
+            } elseif (isset($_POST['Deny'])) {
+                $update_keys = array_keys($_POST['Deny']);
+                $reqID = $update_keys[0];
+                $EmployeeID = $_POST['EmployeeID'][$reqID];
+                $EffectiveDate = $_POST['EffectiveDate'][$reqID];
+                $OriginalShift = $_POST['OriginalShift'][$reqID];
+                $RequestedStartTime = $_POST['RequestedStartTime'][$reqID];
+                $RequestedEndTime = $_POST['RequestedEndTime'][$reqID];
+                $Reason = $_POST['Reason'][$reqID];
+                $RequestDate = $_POST['RequestDate'][$reqID];
+                $Status = $_POST['status'][$reqID];
+
+                denyTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $RequestedStartTime, $RequestedEndTime, $Reason, $RequestDate, $Status);
+
+            } else {
+                debug_to_console('poo');
+            }
+
+            debug_to_console($update_keys);
+
+        }   
     }
 }
 postServer();
