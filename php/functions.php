@@ -22,8 +22,8 @@ function dbConnect(){
 function getBirthday(){
     $mysqli = dbConnect();
 
-
-    $sql = "SELECT EmployeeID, FName, LName, BDate FROM employee";
+# "SELECT EmployeeID, FName, LName, DATE_FORMAT(BDate,'%m-%d') BDate FROM employee ORDER BY ";
+    $sql = "SELECT EmployeeID, FName, LName, DATE_FORMAT(BDate, '%m-%d') AS BDate FROM employee WHERE DATE_FORMAT(BDate, '%m') = DATE_FORMAT(NOW(), '%m')+1 OR (DATE_FORMAT(BDate, '%m%d') > DATE_FORMAT(NOW(), '%m%d') AND DATE_FORMAT(BDate, '%m') = DATE_FORMAT(NOW(), '%m'))  ORDER BY BDate;";
     $data = [];
     $result = $mysqli->query($sql);
     if ($result) {
