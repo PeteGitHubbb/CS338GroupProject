@@ -1,6 +1,6 @@
 
 <?php
-include __DIR__ ."/../../config/config.php";
+include __DIR__ ."/../config/config.php";
 
 # this function connects to the database using the defined credentials from config, not a feature
 function dbConnect(){
@@ -262,7 +262,7 @@ AND TSAV.VehicleID = V.VehicleID";
     $sql4 = NULL;
     if ($vehicle == "all") { 
         $sql4 = "SELECT * FROM PerfTable";
-    } elseif ($vehicle =="bus") { #2 types of buses, regular and express
+    } elseif ($vehicle =="Bus") { #2 types of buses, regular and express
         $sql4 = "SELECT * FROM PerfTable WHERE ServiceType ='Regular' or ServiceType ='Express'";
     } elseif ($vehicle == "Subway") { # for Subway
         $sql4 = "SELECT * FROM PerfTable where ServiceType = 'Subway'";
