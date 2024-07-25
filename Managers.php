@@ -50,7 +50,9 @@ function postServer() {
                 $Reason = $_POST['Reason'][$reqID];
                 $RequestDate = $_POST['RequestDate'][$reqID];
                 $Status = $_POST['status'][$reqID];
-
+                debug_to_console($reqID);
+                debug_to_console($reqID);
+                debug_to_console($Status);
                 acceptTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $RequestedStartTime, $RequestedEndTime, $Reason, $RequestDate, $Status);
             } elseif (isset($_POST['Deny'])) {
                 $update_keys = array_keys($_POST['Deny']);

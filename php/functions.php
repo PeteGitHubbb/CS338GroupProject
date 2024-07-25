@@ -90,7 +90,7 @@ function getEditableData() {
 # function to get time off requests data: not a feature, connected to Approve/Deny Time off requests feature
 function getTimeOffRequests() {
     $mysqli = dbConnect();
-    $sql = "SELECT RequestID, EmployeeID, EffectiveDate, OriginalShift, RequestedStartTime, RequestedEndTime, Reason, RequestDate, status from shiftrequest;";
+    $sql = "SELECT RequestID, EmployeeID, EffectiveDate, OriginalShift, RequestedStartTime, RequestedEndTime, Reason, RequestDate, status from shiftrequest where Status LIKE '%Pending%'";
     $result = $mysqli->query($sql);
     $data = [];
     if ($result) {
@@ -131,7 +131,7 @@ function updateDepartment($id, $No, $name, $mgr_id) {
 
 function acceptTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $RequestedStartTime, $RequestedEndTime, $Reason, $RequestDate, $status) {
     $queryStatus = False;
-    if ($status != "Pending") {
+    if (!str_contains($status, "Pending")) {
         debug_to_console("You can only update pending requests.");
         return !$queryStatus; 
     } 
@@ -157,7 +157,7 @@ function acceptTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $Req
 
 function denyTimeOff($reqID, $EmployeeID, $EffectiveDate, $OriginalShift, $RequestedStartTime, $RequestedEndTime, $Reason, $RequestDate, $status) {
     $queryStatus = False;
-    if ($status != "Pending") {
+    if (!str_contains($status, "Pending")) {
         debug_to_console("You can only update pending requests.");
         return !$queryStatus; 
     } 

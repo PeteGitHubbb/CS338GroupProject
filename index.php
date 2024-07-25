@@ -26,7 +26,7 @@
     <div class="left">
             <div class="section-title">General</div>
             <a href="javascript:void(0);" onclick="showTable('php/birthdays.php');">Upcoming Birthdays</a>
-            <a href="javascript:void(0);" onclick="showTable('php/employee_schedules.php');">Schedules</a>
+            <a href="javascript:void(0);" onclick="showTable('php/employee_schedules.php');">Employee Schedules</a>
         </div>
         <div class="right" id="TableContainer">
             <div class="section-title">Section Title</div>
