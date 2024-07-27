@@ -109,7 +109,7 @@ postServer();
             <a href="javascript:void(0);" onclick="showTable('php/serviceperformance.php');">Service Performance</a>
         </div>
         <div class="right" id="TableContainer">
-            <div class="section-title">qdsadas</div>
+            <div class="section-title"></div>
         </div>
     </main>
 
